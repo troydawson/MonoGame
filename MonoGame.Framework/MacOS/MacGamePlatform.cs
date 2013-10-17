@@ -238,6 +238,9 @@ namespace Microsoft.Xna.Framework
                 var windowController = (NSWindowController)_mainWindow.WindowController;
                 windowController.Close();
             }
+
+			_gameWindow.Game.SuppressDraw();
+
         }
 
         public override void StartRunLoop()
@@ -408,11 +411,15 @@ namespace Microsoft.Xna.Framework
 
             var graphicsDeviceManager = (GraphicsDeviceManager)Game.Services.GetService(typeof(IGraphicsDeviceManager));
 
-            if (graphicsDeviceManager.IsFullScreen)
-            {
-                frame = NSScreen.MainScreen.Frame;
-                content = NSScreen.MainScreen.Frame;
-            }
+			if (graphicsDeviceManager.IsFullScreen)
+			{
+				//!!! tad this is only for local testing!
+
+				//pick attached secondary screen if available:
+				NSScreen display_screen = NSScreen.Screens.Length == 1 ? NSScreen.MainScreen : NSScreen.Screens[1];
+				frame = display_screen.Frame;
+				content = display_screen.Frame;
+			}
             else
             {
                 content = _gameWindow.Bounds;

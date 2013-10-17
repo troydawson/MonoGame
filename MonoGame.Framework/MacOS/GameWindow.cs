@@ -75,12 +75,14 @@ namespace Microsoft.Xna.Framework
 			set;
 		}
 
+		internal Game Game { get { return _game; } private set { _game = value; } }
+
 		#region GameWindow Methods
 		public GameWindow(Game game, RectangleF frame) : base (frame)
 		{
             if (game == null)
                 throw new ArgumentNullException("game");
-            _game = game;
+			Game = game;
             _platform = (MacGamePlatform)_game.Services.GetService(typeof(MacGamePlatform));
 
 			//LayerRetainsBacking = false; 

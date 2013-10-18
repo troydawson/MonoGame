@@ -112,6 +112,8 @@ namespace Microsoft.Xna.Framework
                 // We set the current directory to the ResourcePath on Mac
                 Directory.SetCurrentDirectory(NSBundle.MainBundle.ResourcePath);
             }
+
+			//!  not applicable here			NSApplication.SharedApplication.PresentationOptions = NSApplicationPresentationOptions.FullScreen;
         }
 
         private void InitializeMainWindow()
@@ -124,6 +126,8 @@ namespace Microsoft.Xna.Framework
             _mainWindow = new MacGameNSWindow(
 				frame, NSWindowStyle.Titled | NSWindowStyle.Closable | NSWindowStyle.Miniaturizable,
                 NSBackingStore.Buffered, true);
+
+			_mainWindow.CollectionBehavior = NSWindowCollectionBehavior.FullScreenPrimary;
 
             _mainWindow.WindowController = new NSWindowController(_mainWindow);
             _mainWindow.Delegate = new MainWindowDelegate(this);
@@ -508,6 +512,15 @@ namespace Microsoft.Xna.Framework
 			public override bool ShouldZoom (NSWindow window, RectangleF newFrame)
 			{
 				return _owner.AllowUserResizing;
+			}
+
+			public override SizeF WillUseFullScreenContentSize(NSWindow window, SizeF proposedSize)
+			{
+				#if DEBUG
+				Console.WriteLine("MainWindowDelegate WillUseFullScreenContentSize {0}", proposedSize);
+				#endif
+
+				return proposedSize;
 			}
         }
     }

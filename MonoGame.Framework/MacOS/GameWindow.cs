@@ -470,9 +470,9 @@ namespace Microsoft.Xna.Framework
 
 			// if the cursor is not to be visible then we us our custom cursor.
 			if (!_game.IsMouseVisible)
-				AddCursorRect(Frame, cursor);
+				AddCursorRect(Bounds, cursor);
 			else
-				AddCursorRect(Frame, NSCursor.ArrowCursor);
+				AddCursorRect(Bounds, NSCursor.ArrowCursor);
 
 		}
 

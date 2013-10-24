@@ -388,8 +388,12 @@ namespace Microsoft.Xna.Framework.Content
         {
             if (typeof(T) == typeof(Texture2D) || typeof(T) == typeof(Texture))
             {
-                using (Stream assetStream = TitleContainer.OpenStream(assetName))
-                {
+#if MONOMAC 
+				using (Stream assetStream = File.OpenRead(Path.Combine(@"/Volumes/Space/MMX4 Staging",assetName)))
+#else
+				using (Stream assetStream = TitleContainer.OpenStream(assetName))
+#endif
+				{
                     Texture2D texture = Texture2D.FromStream(
                         graphicsDeviceService.GraphicsDevice, assetStream);
                     texture.Name = originalAssetName;
